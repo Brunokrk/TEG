@@ -59,3 +59,4 @@ class Grafo:
         
         print("Grau do vertice"+str(rotulo)+ "é "+ str(self.listaVertices[i].degree))
     
+  

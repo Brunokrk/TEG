@@ -9,7 +9,7 @@ grf = Grafo(False)
 
 while True:
     print("Escolha a sua opção")
-    print (" (M) mostra, (V) Inserir vertice, (A) Inserir Aresta, (G)Grau de um vertice, (S) Sair")
+    print (" (M) mostra, (V) Inserir vertice, (A) Inserir Aresta, (G)Grau de um vertice, (T)Grau de todos os vertices, (S) Sair")
     escolha = input("Digite sua opção: ").lower()
     if escolha == 'm':
         grf.imprimeMatriz()
@@ -37,6 +37,9 @@ while True:
             print("Vertice não cadastrado, 'pressione enter'")
             continue
         grf.verticeDegree(vert)
+    elif escolha == 't':
+        for i in range(grf.numVertices):
+            grf.verticeDegree(grf.listaVertices[i])
     elif escolha == 's':
         break
     else:
