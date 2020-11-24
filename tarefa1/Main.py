@@ -9,14 +9,14 @@ grf = Grafo(False)
 
 while True:
     print("Escolha a sua opção")
-    print (" (M) mostra, (V) Inserir vertice, (A) Inserir Aresta, (G)Grau de um vertice, (T)Grau de todos os vertices, (S) Sair")
+    print (" (1)Mostra\n (2)Inserir vertice\n (3)Inserir Aresta\n (4)Grau de um vertice\n (5)Grau de todos os vertices\n (6)É conexo?\n (7)Sair")
     escolha = input("Digite sua opção: ").lower()
-    if escolha == 'm':
+    if escolha == '1':
         grf.imprimeMatriz()
-    elif escolha == 'v':
+    elif escolha == '2':
         valor = input("Digite o rotulo do vertice a inserir: ")
         grf.adicionaVertice(valor)
-    elif escolha == 'a':
+    elif escolha == '3':
         origem = input("Digite o rotulo do vertice de origem: ")
         inicio = grf.localizaRotulo(origem)
         if inicio == -1:
@@ -30,17 +30,19 @@ while True:
             input()
             continue
         grf.adicionaArco(inicio, fim)
-    elif escolha == 'g':
+    elif escolha == '4':
         vert = input("Informe o vértice que deseja calcular o grau: ")
         vert_viability = grf.localizaRotulo(vert)
         if vert_viability == -1:
             print("Vertice não cadastrado, 'pressione enter'")
             continue
         grf.verticeDegree(vert)
-    elif escolha == 't':
+    elif escolha == '5':
         for i in range(grf.numVertices):
             grf.verticeDegree(grf.listaVertices[i])
-    elif escolha == 's':
+    elif escolha == '6':
+        grf.isConnected(0)
+    elif escolha == '7':
         break
     else:
         print("Opção inexistente. Pressione 'enter'")
