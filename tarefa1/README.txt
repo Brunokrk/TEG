@@ -19,3 +19,5 @@ Tarefa 01:
 Tarefa 02:
     a -> Gerado através da observação da matriz de adjacencia e da criação de uma nova matriz para o 
         complemento do grafo em questão
+
+    b -> Apenas observação da fórmula |A| = |V|-1

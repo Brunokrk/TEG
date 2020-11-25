@@ -9,7 +9,7 @@ grf = Grafo(False)
 
 while True:
     print("Escolha a sua opção")
-    print (" (1)Mostra\n (2)Inserir vertice\n (3)Inserir Aresta\n (4)Grau de um vertice\n (5)Grau de todos os vertices\n (6)É conexo?\n (7)Complemento do Grafo\n (8)Sair")
+    print (" \t (1)Mostra\n\t (2)Inserir vertice\n\t (3)Inserir Aresta\n\t (4)Grau de um vertice\n\t (5)Grau de todos os vertices\n\t (6)É conexo?\n\t (7)Complemento do Grafo\n\t (8)É cíclico?\n\t (9)Sair")
     escolha = input("Digite sua opção: ").lower()
     if escolha == '1':
         grf.imprimeMatriz()
@@ -48,7 +48,9 @@ while True:
             print("Grafo é desconexo")
     elif escolha == '7':
         grf.printComplemento()
-    elif escolha =='8':
+    elif escolha == '8':
+        grf.isCiclico()
+    elif escolha =='9':
         break
     else:
         print("Opção inexistente. Pressione 'enter'")

@@ -6,6 +6,7 @@ class Grafo:
         self.isDirected = isDirected
         self.numVerticesMaximo = 20
         self.numVertices = 0
+        self.numArestas = 0
         self.listaVertices = []
         self.matrizAdj = []
         self.pilha = []
@@ -27,6 +28,9 @@ class Grafo:
             self.matrizAdj[fim][inicio] += 1
         elif self.isDirected == True:
             self.matrizAdj[inicio][fim] += 1
+        
+        self.numArestas +=1
+        
 
     def mostraVertice(self, vertice):
         print(self.matrizAdj[vertice].rotulo)
@@ -115,3 +119,10 @@ class Grafo:
                 print()
         else:
             print("O grafo não possui complemento")
+
+
+    def isCiclico(self):
+        if self.numArestas > (self.numVertices - 1):
+            print("Grafo é cíclico")
+        else:
+            print("Grafo não é cíclico")
