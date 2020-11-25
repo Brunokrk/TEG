@@ -9,7 +9,7 @@ grf = Grafo(False)
 
 while True:
     print("Escolha a sua opção")
-    print (" (1)Mostra\n (2)Inserir vertice\n (3)Inserir Aresta\n (4)Grau de um vertice\n (5)Grau de todos os vertices\n (6)É conexo?\n (7)Sair")
+    print (" (1)Mostra\n (2)Inserir vertice\n (3)Inserir Aresta\n (4)Grau de um vertice\n (5)Grau de todos os vertices\n (6)É conexo?\n (7)Complemento do Grafo\n (8)Sair")
     escolha = input("Digite sua opção: ").lower()
     if escolha == '1':
         grf.imprimeMatriz()
@@ -41,8 +41,14 @@ while True:
         for i in range(grf.numVertices):
             grf.verticeDegree(grf.listaVertices[i])
     elif escolha == '6':
-        grf.isConnected(0)
+        retorno = grf.isConnected(0)
+        if retorno == 1:
+            print("Grafo é Conexo")
+        else:
+            print("Grafo é desconexo")
     elif escolha == '7':
+        grf.printComplemento()
+    elif escolha =='8':
         break
     else:
         print("Opção inexistente. Pressione 'enter'")
