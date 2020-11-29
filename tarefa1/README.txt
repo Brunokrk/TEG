@@ -1,5 +1,4 @@
-Equipe: Bruno Marchi Pires
-        Ediney Mendonça
+Bruno Marchi Pires
     
 Disciplina: Teoria de Grafos
 
