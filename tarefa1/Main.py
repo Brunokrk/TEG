@@ -1,5 +1,5 @@
 #Bruno Marchi Pires
-#Ediney Mendonça
+
 from Grafo import *
 
 #True para grafos direcionados

@@ -1,5 +1,5 @@
 # Bruno Marchi Pires
-# Ediney Mendonça
+
 from Vertice import *
 class Grafo:
     def __init__(self, isDirected):

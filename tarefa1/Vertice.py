@@ -1,5 +1,5 @@
 #Bruno Marchi Pires
-#Ediney Mendonça
+
 class Vertice:
     def __init__(self,rotulo):
         self.rotulo = rotulo
