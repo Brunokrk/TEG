@@ -16,7 +16,7 @@ while True:
         print("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-")
         print("A entrada deve ser um grafo: Conexo e cíclico ou Conexo e acíclico ou Desconexo")
         while True:
-            print (" \t (1)Mostra\n\t (2)Inserir vertice\n\t (3)Inserir Aresta\n\t (9)Finalizar")
+            print (" \t (1)Mostra\n\t (2)Inserir vertice\n\t (3)Inserir Aresta\n\t (4)Verificar se é uma árvore \n\t (9)Finalizar")
             print ("Escolha: ")
             choose = input("Digite sua opção").lower()
             if choose == '1':
@@ -38,7 +38,7 @@ while True:
                     input()
                     continue
                 grf.adicionaArco(inicio, fim)
-            elif choose == '3':
+            elif choose == '4':
                 if grf.isCiclico() and grf.isConnected(0):
                     print("O grafo é uma árvore")
                 else:
