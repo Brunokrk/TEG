@@ -38,6 +38,12 @@ while True:
                     input()
                     continue
                 grf.adicionaArco(inicio, fim)
+            elif choose == '3':
+                if grf.isCiclico() and grf.isConnected(0):
+                    print("O grafo é uma árvore")
+                else:
+                    print("O grafo não é uma árvore")
+
             elif  choose == '9':
                 print("Finalizando. . . ")
                 break

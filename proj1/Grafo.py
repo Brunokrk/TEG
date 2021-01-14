@@ -125,5 +125,7 @@ class Grafo:
     def isCiclico(self):
         if self.numArestas > (self.numVertices - 1):
             print("Grafo é cíclico")
+            return True
         else:
             print("Grafo não é cíclico")
+            return False
