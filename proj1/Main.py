@@ -1,23 +1,23 @@
-#Bruno Marchi Pires
+# Bruno Marchi Pires
 
 from Grafo import *
 
-#True para grafos direcionados
-#False para grafos não direcionados
+# True para grafos direcionados
+# False para grafos não direcionados
 
-grf = Grafo(False) 
+grf = Grafo(False)
 
 while True:
     print("Escolha a sua opção")
-    print (" \t (1)Questão 1\n\t (2)Questão 2\n\t (3)Questão 3\n\t (9)Sair")
+    print(" \t (1)Questão 1\n\t (2)Questão 2\n\t (3)Questão 3\n\t (9)Sair")
     escolha = input("Digite sua opção: ").lower()
     if escolha == '1':
         """Executa exercício 1 do trabalho 1"""
         print("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-")
         print("A entrada deve ser um grafo: Conexo e cíclico ou Conexo e acíclico ou Desconexo")
         while True:
-            print (" \t (1)Mostra\n\t (2)Inserir vertice\n\t (3)Inserir Aresta\n\t (4)Verificar se é uma árvore \n\t (9)Finalizar")
-            print ("Escolha: ")
+            print(" \t (1)Mostra\n\t (2)Inserir vertice\n\t (3)Inserir Aresta\n\t (4)Verificar se é uma árvore \n\t (9)Finalizar")
+            print("Escolha: ")
             choose = input("Digite sua opção").lower()
             if choose == '1':
                 grf.imprimeMatriz()
@@ -28,7 +28,7 @@ while True:
                 origem = input("Digite o rotulo do vertice de origem: ")
                 inicio = grf.localizaRotulo(origem)
                 if inicio == -1:
-                    print("Vertice não cadastrado, 'pressione enter'")
+                    print("Vertice não cadastrado,  'pressione enter'")
                     input()
                     continue
                 destino = input("Digite o rotulo do vertice de destino: ")
@@ -44,7 +44,7 @@ while True:
                 else:
                     print("O grafo não é uma árvore")
 
-            elif  choose == '9':
+            elif choose == '9':
                 print("Finalizando. . . ")
                 break
 
@@ -54,7 +54,7 @@ while True:
     elif escolha == '3':
         """Executa exercicio 3"""
 
-    elif escolha =='9':
+    elif escolha == '9':
         break
     else:
         print("Opção inexistente. Pressione 'enter'")

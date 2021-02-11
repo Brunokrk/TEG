@@ -1,9 +1,10 @@
 # Bruno Marchi Pires
 from Vertice import *
+
 class Grafo:
     def __init__(self, isDirected):
         self.isDirected = isDirected
-        self.numVerticesMaximo = 20
+        self.numVerticesMaximo = 50
         self.numVertices = 0
         self.numArestas = 0
         self.listaVertices = []
@@ -29,9 +30,8 @@ class Grafo:
             self.matrizAdj[fim][inicio] += 1
         elif self.isDirected == True:
             self.matrizAdj[inicio][fim] += 1
-        
-        self.numArestas +=1
-        
+
+        self.numArestas += 1
 
     def mostraVertice(self, vertice):
         print(self.matrizAdj[vertice].rotulo)
@@ -120,7 +120,6 @@ class Grafo:
                 print()
         else:
             print("O grafo não possui complemento")
-
 
     def isCiclico(self):
         if self.numArestas > (self.numVertices - 1):
