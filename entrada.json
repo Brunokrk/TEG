@@ -1,0 +1,92 @@
+{
+    "isDirected" : false,
+    "numVerticesMaximo" : 50,
+    "numVertices" : 20,
+    "numArestas" : 24,
+    "listaVertices" : [
+        {
+            "rotulo" : "caiado",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "cavado",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "cavalo",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "cavala",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "cabala",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "vaiado",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "varado",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "virado",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "virada",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "virava",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "girava",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "girafa",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "ralo",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "ramo",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "rato",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "remo",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "reto",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "rata",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "rita",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "reta",
+            "degree" : 0
+        },
+        {
+            "rotulo" : "rota",
+            "degree" : 0
+        }
+    ]
+}

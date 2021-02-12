@@ -1,7 +1,7 @@
-# Bruno Marchi Pires
+# Bruno Marchi Pires2
 
 from Grafo import *
-
+import functions as fnc
 # True para grafos direcionados
 # False para grafos não direcionados
 
@@ -50,10 +50,45 @@ while True:
 
     elif escolha == '2':
         """Executa exercício 2"""
+        
 
     elif escolha == '3':
         """Executa exercicio 3"""
+        
 
+        print("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-")
+        print("EXERCÍCIO 3")
+        while True:
+            print(" \t (1)Mostra\n\t (2)Inserir vertice\n\t (3)Inserir Aresta\n\t (4)Palavra com maior numero de palavras adjacentes \n\t (9)Finalizar")
+            print("Escolha: ")
+            choose = input("Digite sua opção").lower()
+            if choose == '1':
+                grf.imprimeMatriz()
+            elif choose == '2':
+                valor = input("Digite o rotulo do vertice a inserir: ")
+                grf.adicionaVertice(valor)
+            elif choose == '3':
+                origem = input("Digite o rotulo do vertice de origem: ")
+                inicio = grf.localizaRotulo(origem)
+                if inicio == -1:
+                    print("Vertice não cadastrado,  'pressione enter'")
+                    input()
+                    continue
+                destino = input("Digite o rotulo do vertice de destino: ")
+                fim = grf.localizaRotulo(destino)
+                if fim == -1:
+                    print("Vertice não cadastrado, 'pressione enter'")
+                    input()
+                    continue
+                grf.adicionaArco(inicio, fim)
+            elif choose == '4':
+                print("A palavra que possui mais palavras adjacentes é:")
+                grf.palavraMaiorAdjacencia()
+
+
+            elif choose == '9':
+                print("Finalizando. . . ")
+                break
     elif escolha == '9':
         break
     else:

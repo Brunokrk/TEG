@@ -1,10 +1,11 @@
 # Bruno Marchi Pires
 from Vertice import *
 
+
 class Grafo:
     def __init__(self, isDirected):
         self.isDirected = isDirected
-        self.numVerticesMaximo = 50
+        self.numVerticesMaximo = 22
         self.numVertices = 0
         self.numArestas = 0
         self.listaVertices = []
@@ -128,3 +129,21 @@ class Grafo:
         else:
             print("Grafo não é cíclico")
             return False
+
+    def palavraMaiorAdjacencia(self):
+        """Método para o exercício 3"""
+        contador = 0
+        valorMax = 0
+        index = 0
+        for i in range(self.numVertices):
+            for j in range(self.numVertices):
+                if(self.matrizAdj[i][j] == 1):
+                    contador = contador + 1
+            if(contador > valorMax):
+                valorMax = contador
+                index = i
+            contador = 0
+
+        for i in range(len(self.listaVertices)):
+            if (i == index):
+                print(str(self.listaVertices[i].rotulo))
