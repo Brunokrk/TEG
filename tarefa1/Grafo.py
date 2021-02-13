@@ -12,6 +12,7 @@ class Grafo:
         self.pilha = []
         self.vet_marked = []
         self.matrizAdjComp = []
+        self.saltos = 0
         for i in range(self.numVerticesMaximo):
             linhaMatriz = []
             for j in range(self.numVerticesMaximo):

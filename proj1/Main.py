@@ -50,11 +50,9 @@ while True:
 
     elif escolha == '2':
         """Executa exercício 2"""
-        
 
     elif escolha == '3':
         """Executa exercicio 3"""
-        
 
         print("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-")
         print("EXERCÍCIO 3")
@@ -84,8 +82,11 @@ while True:
             elif choose == '4':
                 print("A palavra que possui mais palavras adjacentes é:")
                 grf.palavraMaiorAdjacencia()
-
-
+            elif choose == '5':
+                # grf.calculoSaltos()
+                print("")
+            elif choose == '6':
+                grf.coloracao()
             elif choose == '9':
                 print("Finalizando. . . ")
                 break

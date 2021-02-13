@@ -13,6 +13,7 @@ class Grafo:
         self.pilha = []
         self.vet_marked = []
         self.matrizAdjComp = []
+        self.saltos = 0
         for i in range(self.numVerticesMaximo):
             linhaMatriz = []
             for j in range(self.numVerticesMaximo):
@@ -147,3 +148,36 @@ class Grafo:
         for i in range(len(self.listaVertices)):
             if (i == index):
                 print(str(self.listaVertices[i].rotulo))
+
+    def obtemAdjacenteNaoVisitado(self,v):
+        for i in range (self.numVertices):
+            if (self.matrizAdj[v][i] ==1 and self.listaVertices[i].foiVisitado() == False):
+                return i
+        return -1
+
+    def dfs(self,inicio,fim):
+        pilha = []
+        self.listaVertices[inicio].regVisitado()
+        pilha.append(inicio) # faz o push na pilha
+        while len(pilha) != 0:
+            elementoAnalisar = pilha[len(pilha)-1]
+            if (elementoAnalisar == fim):
+                print ("O caminho é:"),
+                for i in pilha:
+                    print (self.listaVertices[i].rotulo),
+                print ()
+                break
+            v = self.obtemAdjacenteNaoVisitado(elementoAnalisar)
+            if (v == -1):
+                pilha.pop()
+            else:
+                self.listaVertices[v].regVisitado()
+                pilha.append(v)
+        else:
+            print("Caminho não encontrado")
+        for i in self.listaVertices:
+            i.limpa()
+
+
+    def coloracao (self, inicio):
+        
