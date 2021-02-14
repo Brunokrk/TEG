@@ -1,6 +1,6 @@
 # Bruno Marchi Pires2
 
-from Grafo import *
+from Grafo import*
 import functions as fnc
 # True para grafos direcionados
 # False para grafos não direcionados
@@ -57,7 +57,7 @@ while True:
         print("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-")
         print("EXERCÍCIO 3")
         while True:
-            print(" \t (1)Mostra\n\t (2)Inserir vertice\n\t (3)Inserir Aresta\n\t (4)Palavra com maior numero de palavras adjacentes \n\t (9)Finalizar")
+            print(" \t (1)Mostra\n\t (2)Inserir vertice\n\t (3)Inserir Aresta\n\t (4)Palavra com maior numero de palavras adjacentes\n\t (5)Palavras distantes em mais de 3 saltos\n\t (6)É Bipartido? \n\t (9)Finalizar")
             print("Escolha: ")
             choose = input("Digite sua opção").lower()
             if choose == '1':
@@ -83,10 +83,15 @@ while True:
                 print("A palavra que possui mais palavras adjacentes é:")
                 grf.palavraMaiorAdjacencia()
             elif choose == '5':
-                # grf.calculoSaltos()
+                grf.palavrasDistantes()
                 print("")
             elif choose == '6':
-                grf.coloracao()
+                rotulo = input("Informe o rotulo do vertice raiz")
+                bipartido = grf.isBipartido(rotulo)
+                if(bipartido == 1):
+                    print("Grafo é Bipartido")
+                else:
+                    print("Grafo não é Bipartido")                
             elif choose == '9':
                 print("Finalizando. . . ")
                 break

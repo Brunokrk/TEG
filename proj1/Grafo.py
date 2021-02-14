@@ -1,5 +1,5 @@
 # Bruno Marchi Pires
-from Vertice import *
+from Vertice import*
 
 
 class Grafo:
@@ -9,11 +9,10 @@ class Grafo:
         self.numVertices = 0
         self.numArestas = 0
         self.listaVertices = []
-        self.matrizAdj = []
         self.pilha = []
-        self.vet_marked = []
+        self.matrizAdj = []
+        self.vet_marked = []  # para metodo do exercicio 1
         self.matrizAdjComp = []
-        self.saltos = 0
         for i in range(self.numVerticesMaximo):
             linhaMatriz = []
             for j in range(self.numVerticesMaximo):
@@ -23,13 +22,19 @@ class Grafo:
     def adicionaVertice(self, rotulo):
         """Adiciona um vértice do grafo"""
         self.numVertices += 1
+        if(len(self.listaVertices) == 0):
+            # primeiro vertice cadastrado
+            aux = Vertice(rotulo)
+            aux.raiz = True
+            aux.distancia = 0
         self.listaVertices.append(Vertice(rotulo))
 
     def adicionaArco(self, inicio, fim):
-        """Adiciona uma aresta do grafo"""
+        """Adiciona uma aresta do grafo não direcionado"""
         if self.isDirected == False:
             self.matrizAdj[inicio][fim] += 1
             self.matrizAdj[fim][inicio] += 1
+            self.listaVertices[fim].distancia = self.listaVertices[inicio].distancia + 1
         elif self.isDirected == True:
             self.matrizAdj[inicio][fim] += 1
 
@@ -50,6 +55,9 @@ class Grafo:
         """Localiza um vértice na matriz"""
         for i in range(self.numVertices):
             if self.listaVertices[i].igualA(rotulo):
+                if self.listaVertices[i].raiz == True:
+                    # é raiz do grafo
+                    self.listaVertices[i].distancia = 0
                 return i
         return -1
 
@@ -149,23 +157,23 @@ class Grafo:
             if (i == index):
                 print(str(self.listaVertices[i].rotulo))
 
-    def obtemAdjacenteNaoVisitado(self,v):
-        for i in range (self.numVertices):
-            if (self.matrizAdj[v][i] ==1 and self.listaVertices[i].foiVisitado() == False):
+    def obtemAdjacenteNaoVisitado(self, v):
+        for i in range(self.numVertices):
+            if (self.matrizAdj[v][i] == 1 and self.listaVertices[i].foiVisitado() == False):
                 return i
         return -1
 
-    def dfs(self,inicio,fim):
+    def dfs(self, inicio, fim):
         pilha = []
         self.listaVertices[inicio].regVisitado()
-        pilha.append(inicio) # faz o push na pilha
+        pilha.append(inicio)  # faz o push na pilha
         while len(pilha) != 0:
             elementoAnalisar = pilha[len(pilha)-1]
             if (elementoAnalisar == fim):
-                print ("O caminho é:"),
+                print("O caminho é:"),
                 for i in pilha:
-                    print (self.listaVertices[i].rotulo),
-                print ()
+                    print(self.listaVertices[i].rotulo),
+                print()
                 break
             v = self.obtemAdjacenteNaoVisitado(elementoAnalisar)
             if (v == -1):
@@ -178,6 +186,57 @@ class Grafo:
         for i in self.listaVertices:
             i.limpa()
 
+    def palavrasDistantes(self):
+        for item in self.listaVertices:
+            #print("Entrou aqui" + item.rotulo + str(item.distancia))
+            if item.distancia > 3:
+                print("Palavra '" + item.rotulo + "' está a " + str(item.distancia) +
+                      " saltos da raiz '" + self.listaVertices[0].rotulo)
 
-    def coloracao (self, inicio):
-        
+    def isBipartido(self, rotulo):
+        """Verifica se um grafo é bipartido a partir de um dfs"""
+
+        inicio = self.localizaRotulo(rotulo)
+        # Setou a raiz como vertice visitado
+        self.listaVertices[inicio].regVisitado()
+        self.listaVertices[inicio].regCor(1)  # coloriu raiz do grafo
+        self.pilha.append(inicio)  # Empilhou o vertice Visitado
+
+        while(len(self.pilha) > 0):
+            # pega o vertice que está no topo da pilha
+            verticeAnalisar = self.pilha[len(self.pilha) - 1]
+            # Pega um vertice que não foi visitado adjacente ao vertice que está no topo da pilha
+            v = self.obtemAdjacenteNaoVisitado(verticeAnalisar)
+            if(v == -1):
+                # se não existir vertice adjacente não visitado, desempilha
+                self.pilha.pop()
+            else:
+                # existe vertice adjacente não visitado
+                # registra que foi visitado
+                self.listaVertices[v].regVisitado()
+                self.pilha.append(v)  # coloca no topo da pilha
+                bipartido = self.coloracao(v)  # define a cor
+                if(bipartido == -1):
+                    return -1
+
+        return 1
+
+    def coloracao(self, current):
+        """Define a cor do vertice"""
+        cores = []  # guarda as cores ao redos do vertice current
+        for j in range(self.numVertices):
+            if(self.matrizAdj[current][j] == 1):
+                cor = self.listaVertices[j].cor
+                if(cor != 0 and cor not in cores):
+                    # vertice vizinho ja foi colorido
+                    cores.append(self.listaVertices[j].cor)
+
+        if len(cores) >= 2:
+            return -1
+        else:
+            if(cores[0] == 1):
+                self.listaVertices[current].regCor(2)
+                return 1
+            else:
+                self.listaVertices[current].regCor(1)
+                return 1
