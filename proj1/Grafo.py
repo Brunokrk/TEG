@@ -139,6 +139,59 @@ class Grafo:
             print("Grafo não é cíclico")
             return False
 
+    # Métodos utilizados majoritariamente no ex 2
+    def contaPontes(self):
+        contadorPontes = 0
+        for i in range(self.numVertices):
+            for j in range(self.numVertices):
+                if self.matrizAdj[i][j] == 1:
+                    # achou uma aresta
+                    # retiramos aresta
+                    self.matrizAdj[i][j] = 0
+                    self.matrizAdj[j][i] = 0
+                    isPonte = self.dfs(0)
+                    if(isPonte == 1):
+                        # aresta analisada é uma ponte
+                        contadorPontes += 1
+                    self.matrizAdj[i][j] = 1
+                    self.matrizAdj[j][i] = 1
+                    self.resetaMarcas()
+
+        return contadorPontes
+
+    def dfs(self, inicio):
+        contadorVertices = 0
+        # registrou vertice como visitado
+        self.listaVertices[inicio].regVisitado()
+        self.pilha.append(inicio)  # empilhou vertice
+        contadorVertices += 1
+
+        while(len(self.pilha) > 0):
+            # pega o vertice que está no topo da pilha
+            verticeAnalisar = self.pilha[len(self.pilha) - 1]
+            # Pega um vertice que não foi visitado adjacente ao vertice que está no topo da pilha
+            v = self.obtemAdjacenteNaoVisitado(verticeAnalisar)
+            if(v == -1):
+                # se não existir vertice adjacente não visitado, desempilha
+                self.pilha.pop()
+            else:
+                # existe vertice adjacente não visitado
+                # registra que foi visitado
+                self.listaVertices[v].regVisitado()
+                self.pilha.append(v)  # coloca no topo da pilha
+                contadorVertices += 1
+
+        if(contadorVertices == self.numVertices):
+            return -1
+        else:
+            return 1
+
+    # Métodos utilizados majoritariamente no ex 3
+
+    def resetaMarcas(self):
+        for i in self.listaVertices:
+            i.limpa()
+
     def palavraMaiorAdjacencia(self):
         """Método para o exercício 3"""
         contador = 0
@@ -157,41 +210,18 @@ class Grafo:
             if (i == index):
                 print(str(self.listaVertices[i].rotulo))
 
-    def obtemAdjacenteNaoVisitado(self, v):
-        for i in range(self.numVertices):
-            if (self.matrizAdj[v][i] == 1 and self.listaVertices[i].foiVisitado() == False):
-                return i
-        return -1
-
-    def dfs(self, inicio, fim):
-        pilha = []
-        self.listaVertices[inicio].regVisitado()
-        pilha.append(inicio)  # faz o push na pilha
-        while len(pilha) != 0:
-            elementoAnalisar = pilha[len(pilha)-1]
-            if (elementoAnalisar == fim):
-                print("O caminho é:"),
-                for i in pilha:
-                    print(self.listaVertices[i].rotulo),
-                print()
-                break
-            v = self.obtemAdjacenteNaoVisitado(elementoAnalisar)
-            if (v == -1):
-                pilha.pop()
-            else:
-                self.listaVertices[v].regVisitado()
-                pilha.append(v)
-        else:
-            print("Caminho não encontrado")
-        for i in self.listaVertices:
-            i.limpa()
-
     def palavrasDistantes(self):
         for item in self.listaVertices:
             #print("Entrou aqui" + item.rotulo + str(item.distancia))
             if item.distancia > 3:
                 print("Palavra '" + item.rotulo + "' está a " + str(item.distancia) +
                       " saltos da raiz '" + self.listaVertices[0].rotulo)
+
+    def obtemAdjacenteNaoVisitado(self, v):
+        for i in range(self.numVertices):
+            if (self.matrizAdj[v][i] == 1 and self.listaVertices[i].foiVisitado() == False):
+                return i
+        return -1
 
     def isBipartido(self, rotulo):
         """Verifica se um grafo é bipartido a partir de um dfs"""
