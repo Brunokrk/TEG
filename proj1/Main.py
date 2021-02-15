@@ -1,7 +1,5 @@
-# Bruno Marchi Pires2
-
+# Bruno Marchi Pires
 from Grafo import*
-import functions as fnc
 # True para grafos direcionados
 # False para grafos não direcionados
 

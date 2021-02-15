@@ -1,7 +1,6 @@
 # Bruno Marchi Pires
 from Vertice import*
 
-
 class Grafo:
     def __init__(self, isDirected):
         self.isDirected = isDirected
