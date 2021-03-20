@@ -1,13 +1,10 @@
 from collections import defaultdict
-
-
 class Graph:
-
     def __init__(self, graph):
-        self.graph = graph
-        self. ROW = len(graph)
-
-
+        self.graph = graph #para letra A
+        self.ROW = len(graph)
+        self.dicionario = {}
+        
     # Using BFS as a searching algorithm 
     def searching_algo_BFS(self, s, t, parent):
 
@@ -29,7 +26,6 @@ class Graph:
 
         return True if visited[t] else False
 
-    # Applying fordfulkerson algorithm
     def ford_fulkerson(self, source, sink):
         parent = [-1] * (self.ROW)
         max_flow = 0
@@ -55,18 +51,3 @@ class Graph:
 
         return max_flow
 
-
-graph = [[0, 8, 5, 10, 0, 0, 0],
-    [0, 0, 10, 3, 5, 0, 0],
-    [0, 0, 0, 0, 3, 6, 5],
-    [0, 0, 0, 0, 5, 3, 4],
-    [0, 0, 0, 0, 0, 8, 0],
-    [0, 0, 0, 0, 0, 0, 12],
-    [0, 0, 0, 0, 0, 0, 0]]
-
-g = Graph(graph)
-
-source = 0
-sink = 6
-
-print("Max Flow: %d " % g.ford_fulkerson(source, sink))
