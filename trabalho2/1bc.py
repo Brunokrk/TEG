@@ -1,78 +1,95 @@
-import Grafo1 as gr
+# ------------------------------------
+# Desenvolvedor: Bruno Marchi Pires
+# ------------------------------------
 import decimal
+import sys
 
 
-def set_E(grafo):
-    E = []
-    line = []
-    for i in range(grafo.ROW):
-        for j in range(grafo.ROW):
-            if(grafo.graph[i][j] != 0):
-                line.append(j)
-        E.append(line)
-        line.clear()
-    return E
+def buscaDados(arqNome):
+    arq = open(arqNome, "r")
+    matrizCapacidades = []
+    for aux in arq.readlines():
+        # separador é a virgula, caso mude alterar aqui
+        matrizCapacidades.append([int(i) for i in aux.split(',')])
+    return matrizCapacidades
 
 
-def EdmondsKarp(E, C, s, t):
-    n = len(C)
-    flow = 0
-    F = [[0 for y in range(n)] for x in range(n)]
+def buscaVizinhos(matrizCapacidades):
+    """Função para buscar os vizihos de cada vertice"""
+    vizinhos = {}
+    for v in range(len(matrizCapacidades)):
+        vizinhos[v] = []
+    for v, fluxos in enumerate(matrizCapacidades):
+        for vizinho, fluxo in enumerate(fluxos):
+            if fluxo > 0:
+                vizinhos[v].append(vizinho)
+                vizinhos[vizinho].append(v)
+
+    return vizinhos
+
+
+def printaMatrizCapacidades(m):
+    """Função para printar uma matriz"""
+    for line in m:
+        print(line)
+
+
+def EdmondsKarp(mC, vzs, i, f):
+    """Função que roda o algoritmo de Edmonds Karp"""
+    fluxo = 0
+    iterações = 0
+    fluxos = [[0 for i in range(len(mC))] for j in range(len(mC))]
     while True:
-        P = [-1 for x in range(n)]
-        P[s] = -2
-        M = [0 for x in range(n)]
-        M[s] = decimal.Decimal('Infinity')
-        BFSq = []
-        BFSq.append(s)
-        pathFlow, P = BFSEK(E, C, s, t, F, P, M, BFSq)
-        if pathFlow == 0:
+        fluxoMax, P = BFS(mC, vzs, fluxos, i, f)
+        print('fluxo maximo no caminho: '+str(max))
+        if max == 0:
             break
-        flow = flow + pathFlow
-        v = t
-        while v != s:
+        fluxo = fluxo + fluxoMax  # incrementa o fluxo atual calculado
+        v = f
+        while v != i:
             u = P[v]
-            F[u][v] = F[u][v] + pathFlow
-            F[v][u] = F[v][u] - pathFlow
+            fluxos[u][v] = fluxos[u][v] + fluxoMax
+            fluxos[v][u] = fluxos[v][u] - fluxoMax
             v = u
-    return flow
+        
+        print("Rede Residual:")
+        for line in fluxos:
+            print(line)
+
+    return fluxo
 
 
-def BFSEK(E, C, s, t, F, P, M, BFSq):
-    while (len(BFSq) > 0):
-        u = BFSq.pop(0)
-        for v in E[u]:
-            if C[u][v] - F[u][v] > 0 and P[v] == -1:
+def BFS(mC, vzs, fluxos, i, f):
+    """Função que executa uma busca em largura"""
+    P = [-1 for i in range(len(mC))]
+    P[i] = -2
+    M = [0 for i in range(len(mC))]
+    # para ignorar o primeiro item na comparação de menor gasto
+    M[i] = decimal.Decimal("Infinity")
+
+    fila = []
+    fila.append(i)
+    while fila:  # enquanto tiver algo na fila
+        u = fila.pop(0)
+        # percorre os vertices vizinhos de u
+        for v in vizinhos[u]:
+            if(mC[u][v] - fluxos[u][v] > 0 and P[v] == -1):
                 P[v] = u
-                M[v] = min(M[u], C[u][v] - F[u][v])
-                if v != t:
-                    BFSq.append(v)
+                M[v] = min(M[u], mC[u][v] - fluxos[u][v])
+                if(v != f):
+                    fila.append(v)
                 else:
-                    return M[t], P
-    return 0, P
+                    return M[f], P
+
+    return 0, P  # É bom nunca chegar aqui, fazer uma verificação no retorno da função
 
 
-grafoA = [[0, 8, 5, 10, 0, 0, 0],
-          [0, 0, 10, 3, 5, 0, 0],
-          [0, 0, 0, 0, 3, 6, 5],
-          [0, 0, 0, 0, 5, 3, 4],
-          [0, 0, 0, 0, 0, 8, 0],
-          [0, 0, 0, 0, 0, 0, 12],
-          [0, 0, 0, 0, 0, 0, 0]]
+if __name__ == "__main__":
+    # Buscando os dados do arquivo de entrada
+    arqNome = "matriz.txt"
+    matrizCapacidades = buscaDados(arqNome)
+    vizinhos = buscaVizinhos(matrizCapacidades)
 
-
-gA = gr.Graph(grafoA)
-gA.dicionario = {"s": 0}
-gA.dicionario = {"v1": 1}
-gA.dicionario = {"v2": 2}
-gA.dicionario = {"v3": 3}
-gA.dicionario = {"v4": 4}
-gA.dicionario = {"v5": 5}
-gA.dicionario = {"t": 6}
-
-s = 0
-t = 6
-E = set_E(gA)
-
-flow = EdmondsKarp(E, grafoA, s, t)
-print(flow)
+    # inteiros referentes ao inicio e fim do grafo (source, sink)
+    fluxoMaximo = EdmondsKarp(matrizCapacidades, vizinhos, 0, 6)
+    print("O fluxo máximo encontrado é " + str(fluxoMaximo))
