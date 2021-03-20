@@ -8,8 +8,8 @@ def EdmondsKarp(capacity, neighbors, start, end):
     flows = [[0 for i in range(length)] for j in range(length)]
     while True:
         max, parent = BreadthFirstSearch(capacity, neighbors, flows, start, end)
-        print (parent)
-        print ('max:%s' % max)
+        #print (parent)
+        #print ('max:%s' % max)
         if max == 0:
             break
         flow = flow + max
@@ -19,6 +19,10 @@ def EdmondsKarp(capacity, neighbors, start, end):
             flows[u][v] = flows[u][v] + max
             flows[v][u] = flows[v][u] - max
             v = u
+        
+        print("Rede Residual:")
+        for line in flows:
+            print(line)
     return (flow, flows)
 
 
@@ -39,8 +43,8 @@ def BreadthFirstSearch(capacity, neighbors, flows, start, end):
                 parents[v] = u
                 # it will work because at the beginning M[u] is Infinity
                 M[v] = min(M[u], capacity[u][v] - flows[u][v])  # try to get smallest
-                print("AQUI")
-                print(M)
+                #print("AQUI")
+                #print(M)
                 if v != end:
                     queue.append(v)
                 else:

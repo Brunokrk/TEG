@@ -34,24 +34,27 @@ def printaMatrizCapacidades(m):
         print(line)
 
 
-def EdmondsKarp(mC, vzs, i, f):
+def EdmondsKarp(mC, vzs, ini, f):
     """Função que roda o algoritmo de Edmonds Karp"""
     fluxo = 0
     iterações = 0
     fluxos = [[0 for i in range(len(mC))] for j in range(len(mC))]
     while True:
-        fluxoMax, P = BFS(mC, vzs, fluxos, i, f)
-        print('fluxo maximo no caminho: '+str(max))
+        fluxoMax, P = BFS(mC, vzs, fluxos, ini, f)
+        print('fluxo maximo no caminho:'+str(fluxoMax))
         if max == 0:
             break
         fluxo = fluxo + fluxoMax  # incrementa o fluxo atual calculado
         v = f
-        while v != i:
+        print(v)
+        while v != ini:
             u = P[v]
+            #print(u)
             fluxos[u][v] = fluxos[u][v] + fluxoMax
             fluxos[v][u] = fluxos[v][u] - fluxoMax
+            #print(v)
             v = u
-        
+
         print("Rede Residual:")
         for line in fluxos:
             print(line)
@@ -59,16 +62,16 @@ def EdmondsKarp(mC, vzs, i, f):
     return fluxo
 
 
-def BFS(mC, vzs, fluxos, i, f):
+def BFS(mC, vzs, fluxos, ini, f):
     """Função que executa uma busca em largura"""
     P = [-1 for i in range(len(mC))]
-    P[i] = -2
+    P[ini] = -2
     M = [0 for i in range(len(mC))]
     # para ignorar o primeiro item na comparação de menor gasto
-    M[i] = decimal.Decimal("Infinity")
+    M[ini] = decimal.Decimal("Infinity")
 
     fila = []
-    fila.append(i)
+    fila.append(ini)
     while fila:  # enquanto tiver algo na fila
         u = fila.pop(0)
         # percorre os vertices vizinhos de u
@@ -92,4 +95,5 @@ if __name__ == "__main__":
 
     # inteiros referentes ao inicio e fim do grafo (source, sink)
     fluxoMaximo = EdmondsKarp(matrizCapacidades, vizinhos, 0, 6)
+    print("AAAAAAAAA")
     print("O fluxo máximo encontrado é " + str(fluxoMaximo))
