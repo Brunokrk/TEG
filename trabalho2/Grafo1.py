@@ -15,9 +15,7 @@ class Graph:
         visited[s] = True
 
         while queue:
-
             u = queue.pop(0)
-
             for ind, val in enumerate(self.graph[u]):
                 if visited[ind] == False and val > 0:
                     queue.append(ind)

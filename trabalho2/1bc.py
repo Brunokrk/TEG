@@ -49,6 +49,7 @@ def EdmondsKarp(mC, vzs, ini, f):
         print(v)
         while v != ini:
             u = P[v]
+            print(u)
             #print(u)
             fluxos[u][v] = fluxos[u][v] + fluxoMax
             fluxos[v][u] = fluxos[v][u] - fluxoMax
