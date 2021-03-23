@@ -1,3 +1,5 @@
+#Bruno Marchi Pires
+#Este arquivo é apenas de suporte para a resolução da questão 1, ele não é diretamente executado
 from collections import defaultdict
 class Graph:
     def __init__(self, graph):

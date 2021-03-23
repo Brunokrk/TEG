@@ -1,17 +1,112 @@
-# ------------------------------------
-# Desenvolvedor: Bruno Marchi Pires
-# ------------------------------------
+# Bruno Marchi Pires
+# Disciplina Teoria dos Grafos
+# Resolução questão 1 letra b, c
 import decimal
 import sys
 
 
-def buscaDados(arqNome):
-    arq = open(arqNome, "r")
-    matrizCapacidades = []
-    for aux in arq.readlines():
-        # separador é a virgula, caso mude alterar aqui
-        matrizCapacidades.append([int(i) for i in aux.split(',')])
-    return matrizCapacidades
+def EdmondsKarp(mC, vizinhos, ini, fim):
+    fluxo = 0
+    iteracoes = 0
+    fluxos = [[0 for i in range(len(mC))] for j in range(len(mC))]
+    redeResidual = [[0 for i in range(len(mC))] for j in range(len(mC))]
+    while True:
+        max, P = BFS(mC, vizinhos, fluxos, ini, fim)
+        if max == 0:
+            break
+        fluxo = fluxo + max
+        v = fim
+        while v != ini:
+            u = P[v]
+            fluxos[u][v] = fluxos[u][v] + max
+            fluxos[v][u] = fluxos[v][u] - max
+            v = u
+
+        print("Rede Residual iteração: "+str(iteracoes))
+        for k in range(len(mC)):
+            for h in range(len(mC)):
+                redeResidual[k][h] = mC[k][h] - fluxos[k][h]
+        
+        for line in redeResidual:
+            print(line)
+                
+        iteracoes = iteracoes + 1
+    return fluxo, iteracoes, fluxos
+
+
+def BFS(mC, vizinhos, fluxos, ini, fim):
+    Ps = [-1 for i in range(len(mC))]
+    Ps[ini] = -2
+    M = [0 for i in range(len(mC))]
+    M[ini] = decimal.Decimal('Infinity')
+
+    fila = []
+    fila.append(ini)
+    while fila:
+        u = fila.pop(0)
+        for v in vizinhos[u]:
+            if mC[u][v] - fluxos[u][v] > 0 and Ps[v] == -1:
+                Ps[v] = u
+
+                M[v] = min(M[u], mC[u][v] - fluxos[u][v])
+
+                if v != fim:
+                    fila.append(v)
+                else:
+                    return M[fim], Ps
+    return 0, Ps
+
+
+def ParseGraph(file):
+    file_object = open(file, "r")
+    mC = []
+    vizinhos = {}
+    for line in file_object.readlines():
+        mC.append([int(i) for i in line.split(',')])
+    for vertex in range(len(mC)):
+        vizinhos[vertex] = []
+    for vertex, fluxos in enumerate(mC):
+        for neighbor, fluxo in enumerate(fluxos):
+            if fluxo > 0:
+                vizinhos[vertex].append(neighbor)
+                vizinhos[neighbor].append(vertex)
+    return mC, vizinhos
+
+
+def Dinitz(mC, vizinhos, ini, fim):
+    """Função que executa algoritmo de Dinitz
+        Ideia:
+            Determinar vertices no mesmo nível -> 1, 2, 3
+            Verificar Arestas que ligam estes vértice -> existe aresta entre 1 e 2, 1 e 3
+            Retirar tais aresta
+            Rodar F-Fulkerson ou Edmond Karps
+            Adicionar arestas novamente
+            Rodar F-Fulkerson ou Edmond Karps Novamente
+    """
+    # mC possui todas as arestas
+    # mCR não possui arestas que ligam vertices que estão em um mesmo nivel
+    mCR = [[0, 8, 5, 10, 0, 0, 0],
+           [0, 0, 0, 0, 5, 0, 0],
+           [0, 0, 0, 0, 3, 6, 5],
+           [0, 0, 0, 0, 5, 3, 4],
+           [0, 0, 0, 0, 0, 8, 0],
+           [0, 0, 0, 0, 0, 0, 12],
+           [0, 0, 0, 0, 0, 0, 0]]
+
+    vizinhosmCR = buscaVizinhos(mCR)
+    fluxoA, iteracoesA, fluxosConsumidos = EdmondsKarp(
+        mCR, vizinhosmCR, ini, fim)
+
+    # adicionando arestas
+    for i in range(len(mC)):
+        for j in range(len(mC)):
+            if(fluxosConsumidos[i][j] > 0):
+                mCR[i][j] = mC[i][j] - fluxosConsumidos[i][j]
+
+    fluxoB, iteracoesB, fluxosConsumidos = EdmondsKarp(
+        mCR, vizinhosmCR, ini, fim)
+
+    return fluxoA+fluxoB, iteracoesA+iteracoesB
 
 
 def buscaVizinhos(matrizCapacidades):
@@ -28,73 +123,13 @@ def buscaVizinhos(matrizCapacidades):
     return vizinhos
 
 
-def printaMatrizCapacidades(m):
-    """Função para printar uma matriz"""
-    for line in m:
-        print(line)
-
-
-def EdmondsKarp(mC, vzs, ini, f):
-    """Função que roda o algoritmo de Edmonds Karp"""
-    fluxo = 0
-    iterações = 0
-    fluxos = [[0 for i in range(len(mC))] for j in range(len(mC))]
-    while True:
-        fluxoMax, P = BFS(mC, vzs, fluxos, ini, f)
-        print('fluxo maximo no caminho:'+str(fluxoMax))
-        if max == 0:
-            break
-        fluxo = fluxo + fluxoMax  # incrementa o fluxo atual calculado
-        v = f
-        print(v)
-        while v != ini:
-            u = P[v]
-            print(u)
-            #print(u)
-            fluxos[u][v] = fluxos[u][v] + fluxoMax
-            fluxos[v][u] = fluxos[v][u] - fluxoMax
-            #print(v)
-            v = u
-
-        print("Rede Residual:")
-        for line in fluxos:
-            print(line)
-
-    return fluxo
-
-
-def BFS(mC, vzs, fluxos, ini, f):
-    """Função que executa uma busca em largura"""
-    P = [-1 for i in range(len(mC))]
-    P[ini] = -2
-    M = [0 for i in range(len(mC))]
-    # para ignorar o primeiro item na comparação de menor gasto
-    M[ini] = decimal.Decimal("Infinity")
-
-    fila = []
-    fila.append(ini)
-    while fila:  # enquanto tiver algo na fila
-        u = fila.pop(0)
-        # percorre os vertices vizinhos de u
-        for v in vizinhos[u]:
-            if(mC[u][v] - fluxos[u][v] > 0 and P[v] == -1):
-                P[v] = u
-                M[v] = min(M[u], mC[u][v] - fluxos[u][v])
-                if(v != f):
-                    fila.append(v)
-                else:
-                    return M[f], P
-
-    return 0, P  # É bom nunca chegar aqui, fazer uma verificação no retorno da função
-
-
 if __name__ == "__main__":
-    # Buscando os dados do arquivo de entrada
-    arqNome = "matriz.txt"
-    matrizCapacidades = buscaDados(arqNome)
-    vizinhos = buscaVizinhos(matrizCapacidades)
-
-    # inteiros referentes ao inicio e fim do grafo (source, sink)
-    fluxoMaximo = EdmondsKarp(matrizCapacidades, vizinhos, 0, 6)
-    print("AAAAAAAAA")
-    print("O fluxo máximo encontrado é " + str(fluxoMaximo))
+    file_name = "trabalho2/data1bc.txt"  # use file fluxo_network.txt
+    mC, vizinhos = ParseGraph(file_name)
+    
+    print("---------------EDMONDS KARP---------------")
+    fluxoE, iteracoesE, fluxos = EdmondsKarp(mC, vizinhos, 0, 6)
+    print('Fluxo Maximo por Edmond::' +str(fluxoE)+' \nNúmero de Iterações: ' + str(iteracoesE))
+    print("--------------- DINITZ ---------------")
+    fluxoD, iteracoesD = Dinitz(mC, vizinhos, 0, 6)
+    print('Fluxo Maximo por Dinitz::' +str(fluxoD)+' \nNúmero de Iterações: ' + str(iteracoesD))
