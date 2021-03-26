@@ -211,8 +211,7 @@ class Grafo:
 
     def palavrasDistantes(self):
         for item in self.listaVertices:
-            #print("Entrou aqui" + item.rotulo + str(item.distancia))
-            if item.distancia > 3:
+            if item.distancia > 3 and item.rotulo[0] != 'r':
                 print("Palavra '" + item.rotulo + "' está a " + str(item.distancia) +
                       " saltos da raiz '" + self.listaVertices[0].rotulo)
 
@@ -245,14 +244,17 @@ class Grafo:
                 self.listaVertices[v].regVisitado()
                 self.pilha.append(v)  # coloca no topo da pilha
                 bipartido = self.coloracao(v)  # define a cor
-                if(bipartido == -1):
+                if(bipartido == -1 ):
                     return -1
-
+        for item in self.listaVertices:
+            if item.consultaCor() == 0:
+                return -1
+        
         return 1
 
     def coloracao(self, current):
         """Define a cor do vertice"""
-        cores = []  # guarda as cores ao redos do vertice current
+        cores = []  # guarda as cores ao redor do vertice current
         for j in range(self.numVertices):
             if(self.matrizAdj[current][j] == 1):
                 cor = self.listaVertices[j].cor

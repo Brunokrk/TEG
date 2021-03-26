@@ -23,5 +23,6 @@ class Vertice:
     def regCor(self, cor):
         self.cor = cor
 
-    def consultaCor(self, cor):
+    def consultaCor(self):
         return self.cor
+    

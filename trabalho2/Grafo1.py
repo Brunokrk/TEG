@@ -5,9 +5,9 @@ class Graph:
     def __init__(self, graph):
         self.graph = graph #para letra A
         self.ROW = len(graph)
-        self.dicionario = {}
+        #self.dicionario = {}
         
-    # Using BFS as a searching algorithm 
+    
     def searching_algo_BFS(self, s, t, parent):
 
         visited = [False] * (self.ROW)
@@ -38,10 +38,7 @@ class Graph:
                 path_flow = min(path_flow, self.graph[parent[s]][s])
                 s = parent[s]
 
-            # Adding the path flows
             max_flow += path_flow
-
-            # Updating the residual values of edges
             v = sink
             while(v != source):
                 u = parent[v]

@@ -129,7 +129,10 @@ if __name__ == "__main__":
     
     print("---------------EDMONDS KARP---------------")
     fluxoE, iteracoesE, fluxos = EdmondsKarp(mC, vizinhos, 0, 6)
-    print('Fluxo Maximo por Edmond::' +str(fluxoE)+' \nNúmero de Iterações: ' + str(iteracoesE))
+    print(' \nNúmero de Iterações: ' + str(iteracoesE))
     print("--------------- DINITZ ---------------")
     fluxoD, iteracoesD = Dinitz(mC, vizinhos, 0, 6)
-    print('Fluxo Maximo por Dinitz::' +str(fluxoD)+' \nNúmero de Iterações: ' + str(iteracoesD))
+    print(' \nNúmero de Iterações: ' + str(iteracoesD))
+
+    print("------------FLUXO MÁXIMO---------------")
+    print("Fluxo máximo é: "+ str(fluxoE))

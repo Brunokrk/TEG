@@ -3,10 +3,10 @@ import Grafo1 as gr
 def calc_fluxo(gA, gB):
     fluxo = 0
     for i in range(gA.ROW):
-        print(str(gA.ROW))
+        #print(str(gA.ROW))
         #print(str(gA.graph[0][i]) + " - " + str(gB.graph[0][i]))
         fluxo += gA.graph[0][i] - gB.graph[0][i]
-        print(str(fluxo))
+        #print(str(fluxo))
 
     return fluxo
 
@@ -35,10 +35,11 @@ gB = gr.Graph(grafoB)
 
 source = 0
 sink = 6
+
 fluxoAtual = calc_fluxo(gA, gB)
 fluxoMax = gA.ford_fulkerson(source, sink)
 print("O fluxo atual é: " + str(fluxoAtual))
-print("O fluxo máximo é: " + str(fluxoMax))
+print("O fluxo máximo é: " + str(fluxoMax)) #Ford Fulkerson
 
 if(fluxoAtual == fluxoMax):
     print("O fluxo da imagem é Máximo")
